@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app:cached
+      - client_node_modules:/app/node_modules
+  api:
+    build:
+      context: ./api
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./api:/app:cached
+      - api_node_modules:/app/node_modules
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+# top revel volumes
+volumes:
+  client_node_modules:
+  api_node_modules:
