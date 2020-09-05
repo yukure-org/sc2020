@@ -38,7 +38,8 @@ jobs:
     executor: node
     working_directory: ~/sc2020/api
     steps:
-      - run: npm i && npm run test
+      - run: npm i
+      - run: npm run test
   build-and-push-image-client:
     executor: node
     working_directory: ~/sc2020/client
