@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="header">
-        <h1>タイトル</h1>
+        <img className="header__logo" src="/logo.png" alt="irochimon" />
       </header>
       <main className="main">
         <div className="main__left"></div>
@@ -41,11 +41,11 @@ export default function Home() {
         }
 
         main {
-          padding: 5rem 0;
+          width: 100vw;
           flex: 1;
           display: flex;
           flex-direction: row;
-          justify-content: center;
+          justify-content: space-between;
           align-items: center;
         }
 
@@ -73,45 +73,40 @@ export default function Home() {
           text-decoration: none;
         }
 
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
         .logo {
           height: 1em;
         }
 
         .header {
           height: 60px;
-          width: 1500px;
+          width: 100vw;
           color: #fff;
-          text-align: center;
-          background-color: green;
+          text-align: left;
+          vertical-align: middle;
+          background-color: rgb(239, 239, 239);
+        }
+        .header__logo {
+          width: 180px;
         }
 
         .main__left {
-          background-color: pink;
+          width: 375px;
+          height: 100vh;
         }
         .main__center{
-          width: 750px;
+          width: 100%;
+          height: 100vh;
           background-color: #fff;
+          border-left: 2px solid #ccc;
+          border-right: 2px solid #ccc;
         }
         .main__right{
-          width: 100%;
-          background-color: orange;
+          width: 375px;
+          height: 100vh;
+          text-align: center;
+        }
+        .main__postbtn {
+
         }
 
         @media (max-width: 767px) {
@@ -145,17 +140,18 @@ class OnClick extends Component {
   postBrap(event) {
     console.log('handleClick is called');
     {/* ここに書くaxios */}
-
+    axios.post(server, data)
   }
   render() {
       return (
-          <button onClick={this.postBrap}>ここにボタン</button>
+          <button className="main__postbtn" onClick={this.postBrap}>ここにボタン</button>
       );
   }
 }
 
+
 {/* 投稿された記事一覧取得 */}
-{/* 
+{/*
 class GetCard extends Component {
 　getCard(event) {
     console.log("処理開始")
@@ -169,10 +165,34 @@ class GetCard extends Component {
   render() {
       this.getCard()
       return (
-        <div>
+        <div className="card">
+          <div className="card__pokeinfo">
+            <img src="" alt=""/>
+
+          </div>
+          <div>
+            <div></div>
+            <div>
+              <Like />
+            </div>
+          </div>
         </div>
       );
   }
 }
 */}
 
+{/* いいねボタン */}
+{/*
+class Like extends Component {
+  postBrap(event) {
+    console.log('handleClick is called');
+    axios.post(server, data)
+  }
+  render() {
+      return (
+          <button className="main__postbtn" onClick={this.postBrap}>ここにボタン</button>
+      );
+  }
+}
+*/}
