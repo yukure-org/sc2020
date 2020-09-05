@@ -38,6 +38,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          font-family: Noto Sans JP, "Hiragino Kaku Gothic Pro";
         }
 
         main {
@@ -84,6 +85,7 @@ export default function Home() {
           text-align: left;
           vertical-align: middle;
           background-color: rgb(239, 239, 239);
+          padding: 12px;
         }
         .header__logo {
           width: 180px;
@@ -107,6 +109,13 @@ export default function Home() {
         }
         .main__postbtn {
 
+        }
+        .image__circle {
+          border-radius: 200px;
+        }
+
+        .main__postbtn {
+          background-image: url("/like.png");
         }
 
         @media (max-width: 767px) {
@@ -167,12 +176,13 @@ class GetCard extends Component {
       return (
         <div className="card">
           <div className="card__pokeinfo">
-            <img src="" alt=""/>
-
+            <div className="image__circle"><img src="" alt=""/></div>
+            <p></p>
           </div>
           <div>
             <div></div>
             <div>
+              <p></p>
               <Like />
             </div>
           </div>
