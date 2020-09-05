@@ -17,6 +17,7 @@ executors:
 workflows:
   build-test-deploy:
     jobs:
+      - test
       - build-and-push-image-client:
           filters:
             branches:
@@ -33,6 +34,12 @@ workflows:
             branches:
               ignore: /.*/ # ブランチのコミットでは実行しない
 jobs:
+  test:
+    executor: node
+    working_directory: ~/sc2020/api
+    steps:
+      - run: npm i
+      - run: npm run test
   build-and-push-image-client:
     executor: node
     working_directory: ~/sc2020/client
