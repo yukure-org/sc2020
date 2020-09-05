@@ -21,18 +21,18 @@ workflows:
       - build-and-push-image-client:
           filters:
             branches:
-              ignore: /.*/ # ブランチのコミットでは実行しない
+              only: master
       - build-and-push-image-api:
           filters:
             branches:
-              ignore: /.*/ # ブランチのコミットでは実行しない
+              only: master
       - deploy:
           requires:
             - build-and-push-image-client
             - build-and-push-image-api
           filters:
             branches:
-              ignore: /.*/ # ブランチのコミットでは実行しない
+              only: master
 jobs:
   test:
     executor: node
