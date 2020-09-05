@@ -47,7 +47,6 @@ jobs:
     working_directory: ~/sc2020/client
     steps:
       - aws-ecr/build-and-push-image:
-          checkout: false
           dockerfile: Dockerfile
           repo: client
           tag: latest
@@ -56,7 +55,6 @@ jobs:
     working_directory: ~/sc2020/api
     steps:
       - aws-ecr/build-and-push-image:
-          checkout: false
           dockerfile: Dockerfile
           repo: api
           tag: latest
