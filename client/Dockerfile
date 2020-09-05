@@ -8,5 +8,5 @@ RUN npm i
 
 ADD . ./
 
-EXPOSE 3000
+EXPOSE 80
 CMD ["npm", "run", "dev"]
