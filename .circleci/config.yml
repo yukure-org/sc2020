@@ -48,7 +48,7 @@ jobs:
     steps:
       - aws-ecr/build-and-push-image:
           checkout: false
-          dockerfile: client/Dockerfile
+          dockerfile: Dockerfile
           repo: client
           tag: latest
   build-and-push-image-api:
@@ -57,7 +57,7 @@ jobs:
     steps:
       - aws-ecr/build-and-push-image:
           checkout: false
-          dockerfile: api/Dockerfile
+          dockerfile: Dockerfile
           repo: api
           tag: latest
   deploy:
