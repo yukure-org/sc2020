@@ -17,12 +17,21 @@ executors:
 workflows:
   build-test-deploy:
     jobs:
-      - build-and-push-image-client
-      - build-and-push-image-api
+      - build-and-push-image-client:
+          filters:
+            branches:
+              ignore: /.*/ # ブランチのコミットでは実行しない
+      - build-and-push-image-api:
+          filters:
+            branches:
+              ignore: /.*/ # ブランチのコミットでは実行しない
       - deploy:
           requires:
             - build-and-push-image-client
             - build-and-push-image-api
+          filters:
+            branches:
+              ignore: /.*/ # ブランチのコミットでは実行しない
 jobs:
   build-and-push-image-client:
     executor: node
