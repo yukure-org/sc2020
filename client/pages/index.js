@@ -2,11 +2,7 @@ import Head from 'next/head';
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 
-const server = 'http://localhost:8888/';
-
-export default function index(params) {
-  const [posts, setPosts] = useState([]);
-  console.log(params);
+export default function Home({results}) {
   return (
     <div className="container">
       <Head>
@@ -17,13 +13,9 @@ export default function index(params) {
         <img className="header__logo" src="/logo.png" alt="irochimon" />
       </header>
       <main className="main">
-        <div className="main__left" />
-        <div className="main__center">
-          <GetCard />
-        </div>
-        <div className="main__right">
-          <OnClick />
-        </div>
+        <div className="main__left"></div>
+        <div className="main__center"><GetCard data={results}/></div>
+        <div className="main__right"><OnClick /></div>
       </main>
       <footer>
         <a
@@ -93,6 +85,7 @@ export default function index(params) {
           background-color: rgb(239, 239, 239);
           padding: 12px;
         }
+
         .header__logo {
           width: 180px;
         }
@@ -101,26 +94,23 @@ export default function index(params) {
           width: 375px;
           height: 100vh;
         }
-        .main__center {
+
+        .main__center{
           width: 100%;
           height: 100vh;
           background-color: #fff;
           border-left: 2px solid #ccc;
           border-right: 2px solid #ccc;
         }
-        .main__right {
+
+        .main__right{
           width: 375px;
           height: 100vh;
           text-align: center;
         }
-        .main__postbtn {
-        }
-        .image__circle {
-          border-radius: 200px;
-        }
 
-        .main__postbtn {
-          background-image: url('/like.png');
+        .red {
+          color: red;
         }
 
         @media (max-width: 767px) {
@@ -155,12 +145,8 @@ export default function index(params) {
 class OnClick extends Component {
   postBrap(event) {
     console.log('handleClick is called');
-    {
-      /* ここに書くaxios */
-    }
-    {
-      /*axios.post(server, data)*/
-    }
+    {/* ここに書くaxios */}
+    {/*axios.post(server, data)*/}
   }
   render() {
     return (
@@ -171,60 +157,81 @@ class OnClick extends Component {
   }
 }
 
-{
-  /* 投稿された記事一覧取得 */
-}
+{/* 投稿された記事一覧取得 */}
 class GetCard extends Component {
-  async getCard() {
-    const client = axios.create({
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods':
-          'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-      },
-    });
-
-    const result = await client.get('http://api:8888');
-    return result.data;
-  }
-
-  async render() {
-    var data = await this.getCard();
-    return (
-      <div className="card">
-        <div className="card__pokeinfo">
-          <div className="image__circle">
-            <img src="" alt="" />
-          </div>
-          <p />
+  render() {
+    var circle = {
+      'border-radius': '200px',
+      'border': '2px solid #ccc',
+      'width': '90px'
+    }
+    var card = {
+      'border': '1px solid #ccc',
+      'display': 'flex', 
+      'padding': '10px'
+    }
+    var messgae = {
+      'padding': '10px 24px',
+      'font-size': '',
+      'position':'relative',
+      'width':'100%'
+    }
+    var subitem = {
+      'display':'flex',
+      'position':'absolute',
+      'bottom':'0',
+      'right':'0'
+    }
+    const results = this.props.data;
+    for(var i in results){
+      list.push(
+      <div style={card}>
+        <div style={{'width':'100px','text-align':'center','padding':'6px'}}>
+          <div><img src={results[i].img_link} alt={results[i].name} style={circle} /></div>
+            <p>{results[i].name}</p>
         </div>
-        <div>
-          <div />
-          <div>
-            <p />
+        <div style={messgae}>
+          <div>{results[i].comment}</div>
+          <div style={subitem}>
+            <p>{results[i].trainer_name}/{results[i].version}</p>
+            <div>
+              <Like />
+              <div>{results[i].like}</div>
+            </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
-
-{
-  /* いいねボタン */
-}
-{
-  /*
-class Like extends Component {
-  postBrap(event) {
-    console.log('handleClick is called');
-    axios.post(server, data)
-  }
-  render() {
+      );
+    }
       return (
-          <button className="main__postbtn" onClick={this.postBrap}>ここにボタン</button>
+        <div>{list}</div>
       );
   }
 }
-*/
+
+{/* いいねボタン */}
+class Like extends Component {
+  postBrap(event) {
+    console.log('handleClick is called');
+  }
+  render() {
+      return (
+          <button style={{'width':'20px','height':'20px'}} onClick={this.postBrap}><img src="/like.svg"/></button>
+      );
+  }
 }
+
+export async function getStaticProps() {
+  const client = axios.create({
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+    },
+  });
+  const result = await client.get('http://api:8888');
+  const results = result.data;
+  console.log(results);
+  return { props: { results } };
+}
+
