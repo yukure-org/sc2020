@@ -50,7 +50,7 @@ jobs:
           path: ~/sc2020
       - aws-ecr/build-and-push-image:
           checkout: false
-          dockerfile: ~/sc2020/client/Dockerfile
+          dockerfile: Dockerfile
           repo: client
           tag: latest
   build-and-push-image-api:
@@ -61,7 +61,7 @@ jobs:
           path: ~/sc2020
       - aws-ecr/build-and-push-image:
           checkout: false
-          dockerfile: ~/sc2020/api/Dockerfile
+          dockerfile: Dockerfile
           repo: api
           tag: latest
   deploy:
