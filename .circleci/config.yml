@@ -46,16 +46,22 @@ jobs:
     executor: node
     working_directory: ~/sc2020/client
     steps:
+      - checkout:
+          path: ~/sc2020
       - aws-ecr/build-and-push-image:
-          dockerfile: Dockerfile
+          checkout: false
+          dockerfile: ~/sc2020/client/Dockerfile
           repo: client
           tag: latest
   build-and-push-image-api:
     executor: node
     working_directory: ~/sc2020/api
     steps:
+      - checkout:
+          path: ~/sc2020
       - aws-ecr/build-and-push-image:
-          dockerfile: Dockerfile
+          checkout: false
+          dockerfile: ~/sc2020/api/Dockerfile
           repo: api
           tag: latest
   deploy:
