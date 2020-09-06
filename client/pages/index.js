@@ -183,6 +183,7 @@ class GetCard extends Component {
       'right':'0'
     }
     const results = this.props.data;
+    var list = []
     for(var i in results){
       list.push(
       <div style={card}>
