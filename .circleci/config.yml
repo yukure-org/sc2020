@@ -43,7 +43,7 @@ jobs:
       - run: npm i
       - run: npm run test
   build-and-push-image-client:
-    executor: node
+    executor: aws-ecr/default
     working_directory: ~/sc2020/client
     steps:
       - checkout:
@@ -54,7 +54,7 @@ jobs:
           repo: client
           tag: latest
   build-and-push-image-api:
-    executor: node
+    executor: aws-ecr/default
     working_directory: ~/sc2020/api
     steps:
       - checkout:
@@ -65,7 +65,7 @@ jobs:
           repo: api
           tag: latest
   deploy:
-    executor: node
+    executor: aws-cli/default
     steps:
       - aws-ecs/update-service:
           family: "sc2020-prod"
