@@ -180,7 +180,8 @@ class GetCard extends Component {
       'display':'flex',
       'position':'absolute',
       'bottom':'0',
-      'right':'0'
+      'right':'0',
+      'padding':'10px'
     }
     const results = this.props.data;
     var list = []
@@ -194,19 +195,19 @@ class GetCard extends Component {
         <div style={messgae}>
           <div>{results[i].comment}</div>
           <div style={subitem}>
-            <p>{results[i].trainer_name}/{results[i].version}</p>
-            <div>
+            <p style={{'font-size':'0.7rem','vertical-align':'bottom'}}>{results[i].trainer_name} / {results[i].version}</p>
+            <div style={{'margin-left':'10px'}}>
               <Like />
-              <div>{results[i].like}</div>
+              <div style={{'text-align':'center'}}>{results[i].like}</div>
             </div>
           </div>
         </div>
       </div>
       );
     }
-      return (
-        <div>{list}</div>
-      );
+    return (
+      <div>{list}</div>
+    );
   }
 }
 
@@ -216,9 +217,21 @@ class Like extends Component {
     console.log('handleClick is called');
   }
   render() {
-      return (
-          <button style={{'width':'20px','height':'20px'}} onClick={this.postBrap}><img src="/like.svg"/></button>
-      );
+    var nobtn = {
+      'overflow':'visible',
+      'width':'auto',
+	    'padding':'0',
+      'margin':'0',
+      'background':'none',
+      'border':'0',
+      'font-size':'0',
+      'line-height':'0',
+      'overflow':'visible',
+      'cursor':'pointer'
+    }
+    return (
+        <button style={nobtn} onClick={this.postBrap}><img src="/like.svg" width="32px"/></button>
+    );
   }
 }
 
