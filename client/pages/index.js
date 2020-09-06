@@ -1,10 +1,12 @@
 import Head from 'next/head'
-import React, {Component} from 'react';
-{/*import axios from 'axios';*/}
+import React, {Component, useState} from 'react';
+import axios from 'axios';
 
-const server = '';
+const server = 'http://localhost:8888/';
 
-export default function Home() {
+export default function index(params) {
+  const [posts, setPosts] = useState([])
+  console.log(params)
   return (
     <div className="container">
       <Head>
@@ -16,7 +18,7 @@ export default function Home() {
       </header>
       <main className="main">
         <div className="main__left"></div>
-        <div className="main__center">{/*<GetCard/>*/}</div>
+        <div className="main__center"><GetCard/></div>
         <div className="main__right"><OnClick/></div>
       </main>
       <footer>
@@ -149,7 +151,7 @@ class OnClick extends Component {
   postBrap(event) {
     console.log('handleClick is called');
     {/* ここに書くaxios */}
-    axios.post(server, data)
+    {/*axios.post(server, data)*/}
   }
   render() {
       return (
@@ -160,19 +162,17 @@ class OnClick extends Component {
 
 
 {/* 投稿された記事一覧取得 */}
-{/*
 class GetCard extends Component {
-　getCard(event) {
-    console.log("処理開始")
+  getCard() {
     axios.get(server)
-      .then((res)=> {
+      .then((res) => {
         console.log(res);
-
+        return res.data
       })
-      .catch(console.error);
+      .catch(console.log("通信エラーが発生しました"));
   }
   render() {
-      this.getCard()
+      var data = this.getCard()
       return (
         <div className="card">
           <div className="card__pokeinfo">
@@ -183,14 +183,13 @@ class GetCard extends Component {
             <div></div>
             <div>
               <p></p>
-              <Like />
             </div>
           </div>
         </div>
       );
   }
 }
-*/}
+
 
 {/* いいねボタン */}
 {/*
