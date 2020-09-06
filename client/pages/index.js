@@ -1,53 +1,30 @@
 import Head from 'next/head';
+import React, { Component, useState } from 'react';
+import axios from 'axios';
 
-export default function Home() {
+const server = 'http://localhost:8888/';
+
+export default function index(params) {
+  const [posts, setPosts] = useState([]);
+  console.log(params);
   return (
     <div className="container">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!!!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <header className="header">
+        <img className="header__logo" src="/logo.png" alt="irochimon" />
+      </header>
+      <main className="main">
+        <div className="main__left" />
+        <div className="main__center">
+          <GetCard />
+        </div>
+        <div className="main__right">
+          <OnClick />
         </div>
       </main>
-
       <footer>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -67,14 +44,15 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          font-family: Noto Sans JP, 'Hiragino Kaku Gothic Pro';
         }
 
         main {
-          padding: 5rem 0;
+          width: 100vw;
           flex: 1;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
+          flex-direction: row;
+          justify-content: space-between;
           align-items: center;
         }
 
@@ -102,87 +80,50 @@ export default function Home() {
           text-decoration: none;
         }
 
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
         .logo {
           height: 1em;
         }
 
-        @media (max-width: 600px) {
+        .header {
+          height: 60px;
+          width: 100vw;
+          color: #fff;
+          text-align: left;
+          vertical-align: middle;
+          background-color: rgb(239, 239, 239);
+          padding: 12px;
+        }
+        .header__logo {
+          width: 180px;
+        }
+
+        .main__left {
+          width: 375px;
+          height: 100vh;
+        }
+        .main__center {
+          width: 100%;
+          height: 100vh;
+          background-color: #fff;
+          border-left: 2px solid #ccc;
+          border-right: 2px solid #ccc;
+        }
+        .main__right {
+          width: 375px;
+          height: 100vh;
+          text-align: center;
+        }
+        .main__postbtn {
+        }
+        .image__circle {
+          border-radius: 200px;
+        }
+
+        .main__postbtn {
+          background-image: url('/like.png');
+        }
+
+        @media (max-width: 767px) {
           .grid {
             width: 100%;
             flex-direction: column;
@@ -206,4 +147,84 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+{
+  /* 記事投稿処理 */
+}
+class OnClick extends Component {
+  postBrap(event) {
+    console.log('handleClick is called');
+    {
+      /* ここに書くaxios */
+    }
+    {
+      /*axios.post(server, data)*/
+    }
+  }
+  render() {
+    return (
+      <button className="main__postbtn" onClick={this.postBrap}>
+        ここにボタン
+      </button>
+    );
+  }
+}
+
+{
+  /* 投稿された記事一覧取得 */
+}
+class GetCard extends Component {
+  async getCard() {
+    const client = axios.create({
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods':
+          'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+      },
+    });
+
+    const result = await client.get('http://api:8888');
+    return result.data;
+  }
+
+  async render() {
+    var data = await this.getCard();
+    return (
+      <div className="card">
+        <div className="card__pokeinfo">
+          <div className="image__circle">
+            <img src="" alt="" />
+          </div>
+          <p />
+        </div>
+        <div>
+          <div />
+          <div>
+            <p />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+{
+  /* いいねボタン */
+}
+{
+  /*
+class Like extends Component {
+  postBrap(event) {
+    console.log('handleClick is called');
+    axios.post(server, data)
+  }
+  render() {
+      return (
+          <button className="main__postbtn" onClick={this.postBrap}>ここにボタン</button>
+      );
+  }
+}
+*/
 }
