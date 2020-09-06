@@ -18,14 +18,14 @@ workflows:
   build-test-deploy:
     jobs:
       - test
-      - build-and-push-image-client
-        # filters:
-        #   branches:
-        #     only: master
-      - build-and-push-image-api
-        # filters:
-        #   branches:
-        #     only: master
+      - build-and-push-image-client:
+          filters:
+            branches:
+              only: master
+      - build-and-push-image-api:
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - build-and-push-image-client
@@ -67,6 +67,7 @@ jobs:
   deploy:
     executor: aws-cli/default
     steps:
+      - aws-cli/install
       - aws-ecs/update-service:
           family: "sc2020-prod"
           cluster-name: "sc2020"
