@@ -19,7 +19,7 @@ export async function getStaticProps() {
       'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
     },
   });
-  const res = await client.get('http://api:8888');
+  const res = await client.get(process.env.API_URL);
   const results = res.data;
 
   return { props: { results } };
