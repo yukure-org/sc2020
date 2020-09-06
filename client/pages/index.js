@@ -1,12 +1,12 @@
-import Head from 'next/head'
-import React, {Component, useState} from 'react';
+import Head from 'next/head';
+import React, { Component, useState } from 'react';
 import axios from 'axios';
 
 const server = 'http://localhost:8888/';
 
 export default function index(params) {
-  const [posts, setPosts] = useState([])
-  console.log(params)
+  const [posts, setPosts] = useState([]);
+  console.log(params);
   return (
     <div className="container">
       <Head>
@@ -17,9 +17,13 @@ export default function index(params) {
         <img className="header__logo" src="/logo.png" alt="irochimon" />
       </header>
       <main className="main">
-        <div className="main__left"></div>
-        <div className="main__center"><GetCard/></div>
-        <div className="main__right"><OnClick/></div>
+        <div className="main__left" />
+        <div className="main__center">
+          <GetCard />
+        </div>
+        <div className="main__right">
+          <OnClick />
+        </div>
       </main>
       <footer>
         <a
@@ -40,7 +44,7 @@ export default function index(params) {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          font-family: Noto Sans JP, "Hiragino Kaku Gothic Pro";
+          font-family: Noto Sans JP, 'Hiragino Kaku Gothic Pro';
         }
 
         main {
@@ -97,27 +101,26 @@ export default function index(params) {
           width: 375px;
           height: 100vh;
         }
-        .main__center{
+        .main__center {
           width: 100%;
           height: 100vh;
           background-color: #fff;
           border-left: 2px solid #ccc;
           border-right: 2px solid #ccc;
         }
-        .main__right{
+        .main__right {
           width: 375px;
           height: 100vh;
           text-align: center;
         }
         .main__postbtn {
-
         }
         .image__circle {
           border-radius: 200px;
         }
 
         .main__postbtn {
-          background-image: url("/like.png");
+          background-image: url('/like.png');
         }
 
         @media (max-width: 767px) {
@@ -146,53 +149,72 @@ export default function index(params) {
   );
 }
 
-{/* 記事投稿処理 */}
+{
+  /* 記事投稿処理 */
+}
 class OnClick extends Component {
   postBrap(event) {
     console.log('handleClick is called');
-    {/* ここに書くaxios */}
-    {/*axios.post(server, data)*/}
+    {
+      /* ここに書くaxios */
+    }
+    {
+      /*axios.post(server, data)*/
+    }
   }
   render() {
-      return (
-          <button className="main__postbtn" onClick={this.postBrap}>ここにボタン</button>
-      );
+    return (
+      <button className="main__postbtn" onClick={this.postBrap}>
+        ここにボタン
+      </button>
+    );
   }
 }
 
-
-{/* 投稿された記事一覧取得 */}
+{
+  /* 投稿された記事一覧取得 */
+}
 class GetCard extends Component {
-  getCard() {
-    axios.get(server)
-      .then((res) => {
-        console.log(res);
-        return res.data
-      })
-      .catch(console.log("通信エラーが発生しました"));
+  async getCard() {
+    const client = axios.create({
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods':
+          'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+      },
+    });
+
+    const result = await client.get('http://api:8888');
+    return result.data;
   }
-  render() {
-      var data = this.getCard()
-      return (
-        <div className="card">
-          <div className="card__pokeinfo">
-            <div className="image__circle"><img src="" alt=""/></div>
-            <p></p>
+
+  async render() {
+    var data = await this.getCard();
+    return (
+      <div className="card">
+        <div className="card__pokeinfo">
+          <div className="image__circle">
+            <img src="" alt="" />
           </div>
+          <p />
+        </div>
+        <div>
+          <div />
           <div>
-            <div></div>
-            <div>
-              <p></p>
-            </div>
+            <p />
           </div>
         </div>
-      );
+      </div>
+    );
   }
 }
 
-
-{/* いいねボタン */}
-{/*
+{
+  /* いいねボタン */
+}
+{
+  /*
 class Like extends Component {
   postBrap(event) {
     console.log('handleClick is called');
@@ -204,4 +226,5 @@ class Like extends Component {
       );
   }
 }
-*/}
+*/
+}
