@@ -1,0 +1,77 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
+  aws-cli: circleci/aws-cli@1.3.0
+  aws-ecs: circleci/aws-ecs@1.3.0
+  aws-ecr: circleci/aws-ecr@6.12.2
+
+environment_variables: &environment_variables
+  APP: test
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:12.10.0
+        environment: *environment_variables
+workflows:
+  build-test-deploy:
+    jobs:
+      - test
+      - build-and-push-image-client:
+          filters:
+            branches:
+              only: master
+      - build-and-push-image-api:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build-and-push-image-client
+            - build-and-push-image-api
+          filters:
+            branches:
+              only: master
+jobs:
+  test:
+    executor: node
+    working_directory: ~/sc2020/api
+    steps:
+      - checkout:
+          path: ~/sc2020
+      - run: npm i
+      - run: npm run test
+  build-and-push-image-client:
+    executor: node
+    working_directory: ~/sc2020/client
+    steps:
+      - checkout:
+          path: ~/sc2020
+      - aws-ecr/build-and-push-image:
+          checkout: false
+          dockerfile: ~/sc2020/client/Dockerfile
+          repo: client
+          tag: latest
+  build-and-push-image-api:
+    executor: node
+    working_directory: ~/sc2020/api
+    steps:
+      - checkout:
+          path: ~/sc2020
+      - aws-ecr/build-and-push-image:
+          checkout: false
+          dockerfile: ~/sc2020/api/Dockerfile
+          repo: api
+          tag: latest
+  deploy:
+    executor: node
+    steps:
+      - aws-ecs/update-service:
+          family: "sc2020-prod"
+          cluster-name: "sc2020"
+          container-image-name-updates: "container=client,tag=latest"
+      - aws-ecs/update-service:
+          family: "sc2020-prod"
+          cluster-name: "sc2020"
+          container-image-name-updates: "container=api,tag=latest"

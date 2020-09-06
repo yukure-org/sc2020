@@ -143,7 +143,7 @@ export default function index(params) {
         }
       `}</style>
     </div>
-  )
+  );
 }
 
 {/* 記事投稿処理 */}
