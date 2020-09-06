@@ -69,10 +69,12 @@ jobs:
     steps:
       - aws-cli/install
       - aws-ecs/update-service:
-          family: "sc2020-prod"
+          family: "sc2020"
+          service-name: "sc2020-prod"
           cluster-name: "sc2020"
           container-image-name-updates: "container=client,tag=latest"
       - aws-ecs/update-service:
-          family: "sc2020-prod"
+          family: "sc2020"
+          service-name: "sc2020-prod"
           cluster-name: "sc2020"
           container-image-name-updates: "container=api,tag=latest"
