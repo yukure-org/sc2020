@@ -18,14 +18,14 @@ workflows:
   build-test-deploy:
     jobs:
       - test
-      - build-and-push-image-client:
-          filters:
-            branches:
-              only: master
-      - build-and-push-image-api:
-          filters:
-            branches:
-              only: master
+      - build-and-push-image-client
+        # filters:
+        #   branches:
+        #     only: master
+      - build-and-push-image-api
+        # filters:
+        #   branches:
+        #     only: master
       - deploy:
           requires:
             - build-and-push-image-client
