@@ -26,13 +26,13 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy
-        # requires:
-        #   - build-and-push-image-client
-        #   - build-and-push-image-api
-        # filters:
-        #   branches:
-        #     only: master
+      - deploy:
+          requires:
+            - build-and-push-image-client
+            - build-and-push-image-api
+          filters:
+            branches:
+              only: master
 jobs:
   test:
     executor: node
