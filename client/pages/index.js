@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React, { Component, useState } from 'react';
 import axios from 'axios';
+import ReactDOM from 'react-dom'
 
 export default function Home({results}) {
   return (
@@ -80,7 +81,7 @@ export default function Home({results}) {
           height: 60px;
           width: 100vw;
           color: #fff;
-          text-align: left;
+          textAlign: left;
           vertical-align: middle;
           background-color: rgb(239, 239, 239);
           padding: 12px;
@@ -102,17 +103,14 @@ export default function Home({results}) {
           border-left: 2px solid #ccc;
           border-right: 2px solid #ccc;
         }
-
         .main__right{
           width: 375px;
           height: 100vh;
-          text-align: center;
+          textAlign: center;
         }
-
         .red {
           color: red;
         }
-
         @media (max-width: 767px) {
           .grid {
             width: 100%;
@@ -181,14 +179,14 @@ class GetCard extends Component {
       'position':'absolute',
       'bottom':'0',
       'right':'0',
-      'padding':'10px'
+      'padding':'0 10px'
     }
     const results = this.props.data;
     var list = []
     for(var i in results){
       list.push(
       <div style={card}>
-        <div style={{'width':'100px','text-align':'center','padding':'6px'}}>
+        <div style={{'width':'100px','textAlign':'center','padding':'6px'}}>
           <div><img src={results[i].img_link} alt={results[i].name} style={circle} /></div>
             <p>{results[i].name}</p>
         </div>
@@ -196,9 +194,8 @@ class GetCard extends Component {
           <div>{results[i].comment}</div>
           <div style={subitem}>
             <p style={{'font-size':'0.7rem','vertical-align':'bottom'}}>{results[i].trainer_name} / {results[i].version}</p>
-            <div style={{'margin-left':'10px'}}>
-              <Like />
-              <div style={{'text-align':'center'}}>{results[i].like}</div>
+            <div style={{'margin-left':'10px', 'display':'grid'}}>
+              <Like data={{id:results[i].id, cnt:results[i].like}}/>
             </div>
           </div>
         </div>
@@ -211,10 +208,26 @@ class GetCard extends Component {
   }
 }
 
+
+
+
 {/* いいねボタン */}
 class Like extends Component {
   postBrap(event) {
-    console.log('handleClick is called');
+    var url =  location.host
+    // 操作対象のDOM
+    let Like = ReactDOM.findDOMNode(this.refs.like)
+    let Cnt = ReactDOM.findDOMNode(this.refs.cnt)
+    const Dispcnt = Number(Cnt.innerHTML)
+    const likeurl = Like.src.slice(Like.src.indexOf(url+'/'),Like.src.length+1)
+    const likeurlpath = likeurl.replace(url+'/', '')
+    if(likeurlpath === 'like.svg'){
+      Like.src = '/onlike.svg'
+      Cnt.innerHTML = Dispcnt + 1
+    }else{
+      Like.src = '/like.svg'
+      Cnt.innerHTML = Dispcnt - 1
+    }
   }
   render() {
     var nobtn = {
@@ -229,8 +242,14 @@ class Like extends Component {
       'overflow':'visible',
       'cursor':'pointer'
     }
+    const data = this.props.data;
     return (
-        <button style={nobtn} onClick={this.postBrap}><img src="/like.svg" width="32px"/></button>
+        <div>
+          <button id={data.id} style={nobtn} onClick={()=>this.postBrap()}>
+            <img src="/like.svg" width="32px" ref="like"/>
+          </button>
+          <div style={{'textAlign':'center','font-size':'12px'}} ref="cnt">{data.cnt}</div>
+        </div>
     );
   }
 }
