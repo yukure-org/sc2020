@@ -313,24 +313,8 @@ export async function getStaticProps() {
       'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
     },
   });
-  const result = await client.get('http://api:8888');
-  const results = result.data;
-  console.log(results);
+  const res = await client.get(process.env.API_URL);
+  const results = res.data;
+
   return { props: { results } };
 }
-
-export async function postStaticProps(request) {
-  const client = axios.create({
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-    },
-  });
-  const req = {}
-  const result = await client.post('http://api:8888',req);
-  const results = result.data;
-  console.log(results);
-  return { props: { results } };
-}
-
