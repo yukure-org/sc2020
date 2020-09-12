@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="63.809" height="58" viewBox="0 0 63.809 58">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #707070;
+      }
+
+      .cls-2, .cls-5 {
+        fill: none;
+      }
+
+      .cls-3 {
+        fill: #efb8ef;
+      }
+
+      .cls-4 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="いいね" transform="translate(-1487.116 -308)">
+    <g id="楕円形_2" data-name="楕円形 2" class="cls-1" transform="translate(1487.116 308)">
+      <ellipse class="cls-4" cx="31.5" cy="29" rx="31.5" ry="29"/>
+      <ellipse class="cls-5" cx="31.5" cy="29" rx="31" ry="28.5"/>
+    </g>
+    <line id="線_1" data-name="線 1" class="cls-2" x1="63.309" transform="translate(1487.616 337.362)"/>
+    <path id="パス_1" data-name="パス 1" class="cls-3" d="M1690.1,356.812l-16.909-18.859,9.182-13.325,7.727,4.294v9.031l4.773-9.031,5.735-4.294,8.047,13.325Z" transform="translate(-172 -3.871)"/>
+  </g>
+</svg>
